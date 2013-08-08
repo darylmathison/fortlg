@@ -9,8 +9,6 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -25,44 +23,29 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author daryl
  */
 @Entity
-@Table(name = "CONTACT")
+@Table(name = "PHONETYPE")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Contact.findAll", query = "SELECT c FROM Contact c")})
-public class Contact implements Serializable {
+    @NamedQuery(name = "Phonetype.findAll", query = "SELECT p FROM Phonetype p")})
+public class Phonetype implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    @Basic(optional = false)
     @Column(name = "VERSION")
     @Version
-    private int version;
-    @Column(name = "FIRSTNAME")
-    private String firstname;
-    @Column(name = "LASTNAME")
-    private String lastname;
-    @Column(name = "MIDDLE")
-    private String middle;
-    @Column(name = "JOBTITLE")
-    private String jobtitle;
-    @OneToMany(mappedBy = "contactid")
+    private Integer version;
+    @Column(name = "NAME")
+    private String name;
+    @OneToMany(mappedBy = "phonetypeid")
     private Collection<Phonenumber> phonenumberCollection;
-    @OneToMany(mappedBy = "contactid")
-    private Collection<Address> addressCollection;
 
-    public Contact() {
+    public Phonetype() {
     }
 
-    public Contact(Integer id) {
+    public Phonetype(Integer id) {
         this.id = id;
-    }
-
-    public Contact(Integer id, int version) {
-        this.id = id;
-        this.version = version;
     }
 
     public Integer getId() {
@@ -73,44 +56,20 @@ public class Contact implements Serializable {
         this.id = id;
     }
 
-    public int getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
-    public void setVersion(int version) {
+    public void setVersion(Integer version) {
         this.version = version;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getMiddle() {
-        return middle;
-    }
-
-    public void setMiddle(String middle) {
-        this.middle = middle;
-    }
-
-    public String getJobtitle() {
-        return jobtitle;
-    }
-
-    public void setJobtitle(String jobtitle) {
-        this.jobtitle = jobtitle;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @XmlTransient
@@ -120,15 +79,6 @@ public class Contact implements Serializable {
 
     public void setPhonenumberCollection(Collection<Phonenumber> phonenumberCollection) {
         this.phonenumberCollection = phonenumberCollection;
-    }
-
-    @XmlTransient
-    public Collection<Address> getAddressCollection() {
-        return addressCollection;
-    }
-
-    public void setAddressCollection(Collection<Address> addressCollection) {
-        this.addressCollection = addressCollection;
     }
 
     @Override
@@ -141,10 +91,10 @@ public class Contact implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Contact)) {
+        if (!(object instanceof Phonetype)) {
             return false;
         }
-        Contact other = (Contact) object;
+        Phonetype other = (Phonetype) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -153,7 +103,7 @@ public class Contact implements Serializable {
 
     @Override
     public String toString() {
-        return "org.mathison.fortlg.data.Contact[ id=" + id + " ]";
+        return "org.mathison.fortlg.data.Phonetype[ id=" + id + " ]";
     }
     
 }
