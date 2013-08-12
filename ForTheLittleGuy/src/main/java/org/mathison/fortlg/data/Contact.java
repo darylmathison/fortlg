@@ -6,6 +6,8 @@ package org.mathison.fortlg.data;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,9 +51,9 @@ public class Contact implements Serializable {
     @Column(name = "JOBTITLE")
     private String jobtitle;
     @OneToMany(mappedBy = "contactid")
-    private Collection<Phonenumber> phonenumberCollection;
+    private Set<Phonenumber> phonenumberCollection;
     @OneToMany(mappedBy = "contactid")
-    private Collection<Address> addressCollection;
+    private Set<Address> addressCollection;
 
     public Contact() {
     }
@@ -118,7 +120,7 @@ public class Contact implements Serializable {
         return phonenumberCollection;
     }
 
-    public void setPhonenumberCollection(Collection<Phonenumber> phonenumberCollection) {
+    public void setPhonenumberCollection(Set<Phonenumber> phonenumberCollection) {
         this.phonenumberCollection = phonenumberCollection;
     }
 
@@ -127,7 +129,7 @@ public class Contact implements Serializable {
         return addressCollection;
     }
 
-    public void setAddressCollection(Collection<Address> addressCollection) {
+    public void setAddressCollection(Set<Address> addressCollection) {
         this.addressCollection = addressCollection;
     }
 
@@ -151,9 +153,15 @@ public class Contact implements Serializable {
         return true;
     }
 
+    //    @Override
+    //    public String toString() {
+    //        return "org.mathison.fortlg.data.Contact[ id=" + id + " ]";
+    //    }
     @Override
     public String toString() {
-        return "org.mathison.fortlg.data.Contact[ id=" + id + " ]";
+        return "Contact{" + "id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", middle=" + middle + ", jobtitle=" + jobtitle + ", phonenumberCollection=" + phonenumberCollection + ", addressCollection=" + addressCollection + '}';
     }
+    
+    
     
 }
