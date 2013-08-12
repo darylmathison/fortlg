@@ -6,6 +6,7 @@ package org.mathison.fortlg.data;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +27,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "ADDRESSTYPE")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Addresstype.findAll", query = "SELECT a FROM Addresstype a")})
+    @NamedQuery(name = "Addresstype.findAll", query = "SELECT a FROM Addresstype a"),
+    @NamedQuery(name = "Addresstype.findByName", query = "select a from Addresstype a where name = :name")})
 public class Addresstype implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,7 +42,7 @@ public class Addresstype implements Serializable {
     @Column(name = "NAME")
     private String name;
     @OneToMany(mappedBy = "addresstypeid")
-    private Collection<Address> addressCollection;
+    private Set<Address> addressCollection;
 
     public Addresstype() {
     }
@@ -79,11 +81,11 @@ public class Addresstype implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Address> getAddressCollection() {
+    public Set<Address> getAddressCollection() {
         return addressCollection;
     }
 
-    public void setAddressCollection(Collection<Address> addressCollection) {
+    public void setAddressCollection(Set<Address> addressCollection) {
         this.addressCollection = addressCollection;
     }
 
