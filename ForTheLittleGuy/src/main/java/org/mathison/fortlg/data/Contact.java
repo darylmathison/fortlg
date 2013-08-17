@@ -30,7 +30,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "CONTACT")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Contact.findAll", query = "SELECT c FROM Contact c")})
+    @NamedQuery(name = "Contact.findAll", query = "SELECT distinct c FROM Contact c INNER JOIN fetch c.addressCollection a inner join fetch c.phonenumberCollection p"),
+    @NamedQuery(name = "Contact.findByState", query = "SELECT distinct c from Contact c INNER JOIN fetch c.addressCollection a INNER JOIN fetch c.phonenumberCollection p where a.state = :state"),
+    @NamedQuery(name = "Contact.findByCityStateAndAddresstype", 
+        query = "select distinct c from Contact c INNER JOIN fetch c.addressCollection a"
+        + " inner join fetch c.phonenumberCollection p"
+        + " where a.city = :city and a.state = :state and a.addresstypeid = :addresstypeid")})
+
 public class Contact implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

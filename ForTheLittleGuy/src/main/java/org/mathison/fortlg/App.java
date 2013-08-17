@@ -16,7 +16,12 @@ public class App
 {
     public static void main( String[] args )
     {
-        ApplicationContext context = new GenericXmlApplicationContext("app-config.xml");
+        //ApplicationContext context = new GenericXmlApplicationContext("app-config.xml");
+        System.setProperty("spring.profiles.active", "criteria");
+        GenericXmlApplicationContext context = new GenericXmlApplicationContext();
+        //context.getEnvironment().setActiveProfiles("jpql");
+        context.load("app-config.xml", "main-config.xml");
+        context.refresh();
         
         ContactDao contactDao = context.getBean("contactDao", ContactDao.class);
         List<Contact> contacts = contactDao.findAll();

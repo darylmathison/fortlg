@@ -23,9 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Daryl Mathison
  */
-@Repository("contactDao")
 @Transactional
-public class ContactDaoImpl implements ContactDao {
+public class ContactDaoCriteriaImpl implements ContactDao {
     @PersistenceContext
     private EntityManager em;
 
@@ -54,8 +53,10 @@ public class ContactDaoImpl implements ContactDao {
          c.fetch("addressCollection");
          cq.select(c);
          cq.distinct(true);
-         cq.where(cb.equal(ca.get("state"), state));
+         cq.where(cb.equal(ca.get("state"), cb.parameter(String.class, "state")));
+         
          TypedQuery<Contact> query = em.createQuery(cq);
+         query.setParameter("state", state);
          return query.getResultList();
     }
 
@@ -71,12 +72,15 @@ public class ContactDaoImpl implements ContactDao {
         c.fetch("phonenumberCollection");
         cq.select(c);
         cq.distinct(true);
-        Predicate cityp = cb.equal(ca.get("city"), city);
-        Predicate statep = cb.equal(ca.get("state"),state);
-        Predicate typep = cb.equal(ca.get("addresstypeid"), addresstype);
+        Predicate cityp = cb.equal(ca.get("city"), cb.parameter(String.class, "city"));
+        Predicate statep = cb.equal(ca.get("state"),cb.parameter(String.class, "state"));
+        Predicate typep = cb.equal(ca.get("addresstypeid"), cb.parameter(Addresstype.class, "addresstype"));
         cq.where(cb.and(cityp, statep, typep));
         
         TypedQuery<Contact> query = em.createQuery(cq);
+        query.setParameter("city", city)
+             .setParameter("state", state)
+             .setParameter("addresstype", addresstype);
         return query.getResultList();
     }
     
