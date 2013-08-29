@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Daryl Mathison
  */
 @Transactional
+@Repository
 public class ContactDaoCriteriaImpl implements ContactDao {
     @PersistenceContext
     private EntityManager em;

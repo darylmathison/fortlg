@@ -11,12 +11,14 @@ import javax.persistence.TypedQuery;
 import org.mathison.fortlg.data.Addresstype;
 import org.mathison.fortlg.data.Contact;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author daryl
  */
 @Transactional
+@Repository
 public class ContactDaoJpqlImpl implements ContactDao {
     @PersistenceContext
     private EntityManager em;
